@@ -14,23 +14,28 @@ adsl <- data.frame(SUBJIDN  = 1:200,
                    COUNTRY  = sample(c('USA','INDIA','EU','CHINA'), 200, replace = T),
                    stringsAsFactors = F)
   
-1. Examine the structure of the code used to create `adsl`. In R, it’s useful to be able to simulate data on the fly in order to test a new package or function. Type `?runif` and `?sample` at the prompt to learn about these function arguments. Can you describe, in words, how AGE and SAFFL are simulated?
+1. Examine the structure of the code used to create `adsl`. In R, it’s useful to be able to simulate data on the fly in order to test a new package or function. 
+Type `?runif` and `?sample` at the prompt to learn about these function arguments. Can you describe, in words, how AGE and SAFFL are simulated?
   
 2. Write a select query that chooses all columns in `adsl` that start with "S" or end with "Y".
 
+selected_columns <- adsl %>%
+  select(starts_with("S")|ends_with("Y")) 
+#or
+selected_columns <- adsl %>%
+  select(matches("^S|Y$"))
+
 3. Create a new data frame that contains only subjects from USA or INDIA, older than 60 in the safety population. 
+
+new_data <- adsl %>%
+  filter(SAFFL == "Y" & AGE > 60 & COUNTRY %in% c("USA", "INDIA")) 
 
 ## Week 1: Exercise - bring your own study (local R studio) 
 
-
+#First upload dataset into Rstudio through P: drive using Upload option 
 library(haven)
 
-adsl <- read_sas("P:/swan/root/bhc/2927088/21607/stat/main01/dev/analysis/data/adsl.sas7bdat") # please note the / used here
+adsl123 <- haven::read_sas("adsl.sas7bdat")
 
+4. Write a select query that chooses all columns in `adsl` that start with "TRT" or end with "FL"
 
-<br>
-  1. Make changes to the data path above to load the `adsl` dataset from your own study. This may take a while depending on the connection and dataset size. 
-
-2. Write a select query that chooses all columns in `adsl` that start with "TRT" or end with "FL"
-
-3. Create a new data frame that contains only subjects from USA or INDIA, older than 60 in the safety population. 
